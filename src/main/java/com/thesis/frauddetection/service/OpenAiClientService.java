@@ -64,7 +64,6 @@ public class OpenAiClientService {
     }
 
     private Map<String, Object> buildPayload(AnalyzeRequestDto request) {
-        // Prompt de sistema estricto para forzar salida JSON parseable.
         String systemPrompt = "Eres analista senior anti-fraude digital. Evalua phishing/smishing y responde SOLO JSON valido con: " +
                 "score (0-100), level (BAJO|MEDIO|ALTO|CRITICO), reasons (array de strings). " +
                 "No incluyas texto fuera del JSON.";
@@ -74,7 +73,6 @@ public class OpenAiClientService {
 
         Object userContent;
         if (request.getImageBase64() != null && !request.getImageBase64().isBlank()) {
-            // Entrada multimodal: instruccion + imagen en data URI.
             userContent = List.of(
                     Map.of("type", "text", "text", analysisInstruction),
                     Map.of("type", "image_url", "image_url", Map.of("url", "data:image/png;base64," + request.getImageBase64()))

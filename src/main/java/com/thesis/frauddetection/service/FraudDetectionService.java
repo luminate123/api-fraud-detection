@@ -33,8 +33,6 @@ public class FraudDetectionService {
         validateRequest(request);
 
         OpenAiFraudResultDto openAiResult = openAiClientService.analyze(request);
-
-        // Normalizamos salida del modelo para evitar valores fuera de contrato.
         int score = normalizeScore(openAiResult.getScore());
         RiskLevel riskLevel = normalizeRiskLevel(openAiResult.getLevel(), score);
         List<String> reasons = normalizeReasons(openAiResult.getReasons());
