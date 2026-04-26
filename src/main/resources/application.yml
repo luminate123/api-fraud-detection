@@ -1,0 +1,38 @@
+﻿spring:
+  datasource:
+    url: jdbc:postgresql://aws-1-us-east-1.pooler.supabase.com:5432/postgres?user=postgres.dguqrinajrcqdxospveb&password=SebastianSenmache
+    username: postgres.dguqrinajrcqdxospveb
+    password: SebastianSenmache         # ← usar variable de entorno
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect  # ← agregar
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect         # ← agregar
+        format_sql: true
+    show-sql: false
+    open-in-view: false
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.thesis.frauddetection: DEBUG
+
+openai:
+  # Produccion: definir OPENAI_API_KEY por variable de entorno.
+  api-key: ${OPENAI_API_KEY}
+  model: gpt-4o
+
+app:
+  jwt:
+    # Produccion: definir JWT_SECRET_BASE64 por variable de entorno.
+    # Desarrollo local: fallback para evitar error de arranque.
+    secret: ${JWT_SECRET_BASE64:ZGV2LW9ubHktand0LXNlY3JldC1jaGFuZ2UtbWUtbm93LTI1Ni1iaXRzIQ==}
+    expiration-ms: 86400000
